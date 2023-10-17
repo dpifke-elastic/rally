@@ -371,7 +371,7 @@ class SegmentStats(TelemetryDevice):
             stats_file = os.path.join(self.log_root, "segment_stats.log")
             console.info(f"{self.human_name}: Writing segment stats to [{stats_file}]", logger=self.logger)
             with open(stats_file, "w") as f:
-                f.write(segment_stats)
+                f.write(segment_stats.body)
         except BaseException:
             self.logger.exception("Could not retrieve segment stats.")
 
