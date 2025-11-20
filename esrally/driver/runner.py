@@ -534,8 +534,10 @@ class BulkIndex(Runner):
             retry_stats.append(stats)
             if len(lines_to_retry) == 0:
                 break
+            total = len(api_kwargs["body"])
+            self.logger.warn(f"retrying {len(lines_to_retry)} of {total} documents (attempt {i+1}) after request status {response.meta.status}")
             api_kwargs["body"] = lines_to_retry
-            bulk_size = len(lines_to_retry) / 2
+            #bulk_size = len(lines_to_retry) / 2
             response = await es.bulk(params=bulk_params, **api_kwargs)
             request_status = response.meta.status
             if request_status == 400:
